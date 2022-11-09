@@ -70,9 +70,13 @@ function createTable(data) {
   })
 }
 
-function cleanInputs() {
-  heightInput.value = ""
-  weightInput.value = ""
+function cleanInputs() { // Função para limpar resultado
+  heightInput.value = "";
+  weightInput.value = "";
+}
+
+function validDigits(text) { // Função para validação de digitos
+  return text.replace(/[^0-9,]/g, ""); //Área de digitos permitidos
 }
 
 //===========================INICIALIZAÇÃO=================================
@@ -81,6 +85,15 @@ function cleanInputs() {
 createTable(data);
 
 //===========================EVENTOS=======================================
-clearBtn.addEventListener("click", (e) => {
-  cleanInputs();
+[heightInput, weightInput].forEach((el) => {
+  el.addEventListener("input", (e) =>{ //input = evento para detectar notificações
+    const updateValue = validDigits(e.target.value);
+
+    e.target.value = updateValue;
+  }) 
+})
+
+clearBtn.addEventListener("click", (e) => { // Criação do evento ao clicar no botão
+  e.preventDefault(); //Para de recarregar e enviar formulário
+  cleanInputs(); // Chamada da função
 })
